@@ -1,3 +1,20 @@
+# emacs files
+*~
+\#*\#
+.\#*
+
+# Macos files
+.DS_Store
+
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
 # Logs
 logs
 *.log
