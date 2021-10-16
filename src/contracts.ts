@@ -7,5 +7,5 @@ export interface ICustomer {
 
 export interface ICustomerRepo {
 	getByEmail(email: string): Promise<ICustomer>
-	getByDocument(document: string, document_type: string): Promise<ICustomer>
+	// getByDocument(document: string, document_type: string): Promise<ICustomer>
 }
