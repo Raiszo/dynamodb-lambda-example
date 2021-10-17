@@ -1,19 +1,30 @@
 import 'source-map-support/register';
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { z } from 'zod';
 import { getCustomerRepo } from '../repos';
-import { getByEmail } from '../use-cases';
+import { getByDocument } from '../use-cases';
 import { CustomerNotFoundError } from '../contracts';
 
 const ddb_client = new DynamoDBClient({})
 const repo = getCustomerRepo(ddb_client)
 
+const schema = z.object({
+	document_number: z.string(),
+	document_type: z.enum(['DNI', 'RUC', 'CE'])
+})
+
 export const handler: APIGatewayProxyHandler = async (event) => {
     console.log(JSON.stringify(event, null, 4))
 
 	try {
-		// get from dynamodb by email (partition key)
-		const customer = await getByEmail(repo, <string>event.pathParameters?.email)
+		const query = schema.parse(event.queryStringParameters)
+
+		const customer = await getByDocument(
+			repo,
+			query.document_number,
+			query.document_type,
+		)
 
 		return {
 			statusCode: 200,

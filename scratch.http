@@ -1,0 +1,30 @@
+
+##
+POST :base-url/
+Content-Type: application/json
+
+{
+    "email": "leuser@mail.com",
+    "document_type": "DNI",
+    "document_number": "72000101",
+    "name": "le",
+    "last_name": "user"
+}
+
+##
+GET :base-url/leuser@mail.com
+
+##
+GET :base-url?document_number=72000101&document_type=DNI
+
+##
+PUT :base-url/leuser@mail.com
+Content-Type: application/json
+
+{
+    "name": "lol",
+    "last_name": "user"
+}
+
+##
+DELETE :base-url/leuser@mail.com
